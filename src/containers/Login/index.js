@@ -12,7 +12,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useTheme, ThemeProvider } from '@mui/material/styles';
-
+import {  useDispatch} from 'react-redux'
+import { login } from '../../actions'
+ 
 
 function Copyright(props) {
   return (
@@ -30,11 +32,15 @@ function Copyright(props) {
 export default function SignIn() {
 
   const theme = useTheme();
+  const dispatch = useDispatch();
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
+    dispatch(login())
+    
+    
     console.log({
       email: data.get('email'),
       password: data.get('password'),

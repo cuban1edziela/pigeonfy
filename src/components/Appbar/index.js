@@ -7,10 +7,14 @@ import Button from '@mui/material/Button';
 import Logo from './logo.svg'
 import {Link} from "react-router-dom";
 import {useHistory} from "react-router-dom";
+import { useSelector} from 'react-redux';
+
+
 
 export default function ButtonAppBar() {
-
+    
     const history = useHistory();
+    const isLogged = useSelector(state => state.isLogged);
 
     const goToEnciphering = () => history.push('/encipher')
     const goToDeciphering = () => history.push('/decipher')
@@ -42,7 +46,7 @@ export default function ButtonAppBar() {
 
                         <Button sx={{ml: 5}} variant='text' onClick={goToAboutUs} color="secondary">ABOUT US</Button>
 
-                        <Button sx={{ml: 5}} variant='outlined' onClick={goToLogin} color="secondary">LOGIN</Button>
+                        { isLogged ? '' : <Button sx={{ml: 5}} variant='outlined' onClick={goToLogin} color="secondary">LOGIN</Button>}
                     </Typography>
 
                 </Toolbar>

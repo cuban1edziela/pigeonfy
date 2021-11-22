@@ -46,7 +46,12 @@ export default function SimpleContainer() {
 
 
     const handleChange = (event) => {
-        setMessage(event.target.value);
+        const value = event.target.value
+        if (value === "" || value.match(/^[0-9]+$/) || value.match(/^[A-Z]+$/) || value.match(/^[a-z]+$/)) {
+            setMessage(event.target.value);
+        }else{
+            alert('Invalid input format. Please enter only numbers and letters without commas.')
+        }
     }
 
     const handleChangeN = (event) => {
@@ -56,7 +61,10 @@ export default function SimpleContainer() {
         }
     }
     const handleChangeE = (event) => {
-        setE(event.target.value);
+        const value = event.target.value
+        if (value === "" || value.match(/^[0-9]+$/)) {
+            setE(value)
+        }
     }
 
 
@@ -70,6 +78,7 @@ export default function SimpleContainer() {
 
                 <Box sx={{display: 'inline-flex', width: '100%', pl: 10, pr: 10}}>
                     <TextareaAutosize
+                        value={message}
                         aria-label="empty textarea"
                         placeholder="Enter your message here"
                         minRows={5}
@@ -86,6 +95,7 @@ export default function SimpleContainer() {
                     />
 
                     <TextareaAutosize
+                        value={e}
                         aria-label="empty textarea"
                         placeholder="Enter e value here"
                         minRows={5}
