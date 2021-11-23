@@ -4,15 +4,19 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 import { useTheme } from '@mui/material/styles';
 import SendIcon from '@mui/icons-material/Send';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { useState } from 'react'
+import { useState } from 'react';
 import axios from 'axios';
-import PigeonKey from './PigeonKey.svg'
+import PigeonKey from './PigeonKey.svg';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 export default function SimpleContainer() {
-    const theme = useTheme()
-    const [message, setMessage] = useState('')
+    const theme = useTheme();
+    const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
-    const [cipheredMessage, setCipheredMessage] = useState('')
+    const [cipheredMessage, setCipheredMessage] = useState('');
+    const isLogged = useSelector(state => state.isLogged);
+    const history = useHistory()
 
     const handleClick = () => {
         setLoading(true);
@@ -32,7 +36,6 @@ export default function SimpleContainer() {
         })
     };
 
-
     const handleChange = (event) => {
         setMessage(event.target.value);
     }
@@ -42,6 +45,9 @@ export default function SimpleContainer() {
 
         <div style={{ width: '100%' }}>
 
+            {/* if (isLogged === false){
+                history.push('/sign-up')
+            } */}
 
             <Box sx={{ display: 'flex', pl: 5 }}>
                 <Typography variant="h5" component="div" color='textPrimary'>

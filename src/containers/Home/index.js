@@ -5,29 +5,38 @@ import PigeonImage from './pigeonimage.svg'
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import {useHistory} from "react-router-dom";
-import {useTheme} from '@mui/material/styles'
+import { useHistory } from "react-router-dom";
+import { useTheme } from '@mui/material/styles'
+import { useSelector } from 'react-redux';
 
 export default function SimpleContainer() {
     const history = useHistory();
     const theme = useTheme()
+    const isLogged = useSelector(state => state.isLogged)
 
     const goToSignUp = () => {
-        history.push("/sign-up")
+        history.push('/sign-up')
+    }
+    const goToEncipher = () => {
+        history.push('/encipher')
     }
 
     return (
         <>
-            <Container maxWidth="sm " sx={{bgcolor: 'primary'}}>
-                <Box sx={{pt: 2, display: 'flex', flexDirection: 'row'}}>
+            <Container maxWidth="sm " sx={{ bgcolor: 'primary' }}>
+                <Box sx={{ pt: 2, display: 'flex', flexDirection: 'row' }}>
 
-                    <Box sx={{width: '600px', display: 'flex', m: 'auto'}}>
+                    <Box sx={{ width: '50%', display: 'flex', m: 'auto' }}>
                         <Stack spacing={5}>
 
-                            <Typography variant="h3" component="div" color='textPrimary'>
-                                YOUR <span style={{color: theme.palette.secondary.main}}> PRIVACY  </span> IS OUR
-                                TOP <span style={{color: theme.palette.secondary.main}}> PRIORITY </span>
-                            </Typography>
+                            {isLogged ? <Typography variant="h3" component="div" color='textPrimary'>
+                                Thank <span style={{ color: theme.palette.secondary.main }}> You  </span> for
+                                being with <span style={{ color: theme.palette.secondary.main }}> us </span>
+                            </Typography> :
+                                <Typography variant="h3" component="div" color='textPrimary'>
+                                    YOUR <span style={{ color: theme.palette.secondary.main }}> PRIVACY  </span> IS OUR
+                                    TOP <span style={{ color: theme.palette.secondary.main }}> PRIORITY </span>
+                                </Typography>}
 
 
                             <Box sx={{
@@ -39,22 +48,32 @@ export default function SimpleContainer() {
                                 m: 'auto'
                             }}>
 
-                                <Button
-                                    onClick={goToSignUp}
-                                    sx={{color: 'textPrimary'}}
-                                    variant='contained' size='large'
-                                    color="secondary"
-                                >
-                                    GET STARTED
-                                </Button>
+                                {isLogged ?
+                                    <Button
+                                        onClick={goToEncipher}
+                                        sx={{ color: 'textPrimary' }}
+                                        variant='contained' size='large'
+                                        color="secondary"
+                                    >
+                                        ENCIPHER NOW
+                                    </Button> :
+
+                                    <Button
+                                        onClick={goToSignUp}
+                                        sx={{ color: 'textPrimary' }}
+                                        variant='contained' size='large'
+                                        color="secondary"
+                                    >
+                                        GET STARTED
+                                    </Button>}
 
                             </Box>
 
                         </Stack>
                     </Box>
 
-                    <Box sx={{width: '400px', display: 'block', pl: 'auto'}}>
-                        <img src={PigeonImage} alt='PigeonImage'/>
+                    <Box sx={{ width: '400px', display: 'block', p: 'auto' }}>
+                        <img src={PigeonImage} alt='PigeonImage' />
                     </Box>
 
                 </Box>

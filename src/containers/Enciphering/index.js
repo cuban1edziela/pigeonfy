@@ -1,12 +1,14 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
-import {useTheme} from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import SendIcon from '@mui/icons-material/Send';
 import LoadingButton from '@mui/lab/LoadingButton';
-import {useState} from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import PigeonCage from './PigeonCage.svg';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 export default function SimpleContainer() {
     const theme = useTheme()
@@ -15,6 +17,8 @@ export default function SimpleContainer() {
     const [e, setE] = useState('');
     const [loading, setLoading] = useState(false);
     const [cipheredMessage, setCipheredMessage] = useState('');
+    const isLogged = useSelector(state => state.isLogged);
+    const history = useHistory();
 
     const handleClick = () => {
         setLoading(true);
@@ -44,7 +48,6 @@ export default function SimpleContainer() {
 
     };
 
-
     const handleChange = (event) => {
         const value = event.target.value
         if (value === "" || value.match(/^[0-9]+$/) || value.match(/^[A-Z]+$/) || value.match(/^[a-z]+$/)) {
@@ -67,9 +70,10 @@ export default function SimpleContainer() {
         }
     }
 
-
     return (
         <div style={{width: '100%'}}>
+
+
             <Box sx={{display: 'inline-flex', pl: 5}}>
                 <Typography variant="h5" component="div" color='textPrimary'>
                     ENCIPHER YOUR <span style={{color: theme.palette.secondary.main}}> MESSAGE </span> FOR <span

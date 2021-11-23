@@ -8,6 +8,7 @@ import Logo from './logo.svg'
 import {Link} from "react-router-dom";
 import {useHistory} from "react-router-dom";
 import { useSelector} from 'react-redux';
+import Avatar from '@mui/material/Avatar';
 
 
 
@@ -45,10 +46,14 @@ export default function ButtonAppBar() {
                         <Button sx={{ml: 5}} variant='text' onClick={goToPricing} color="secondary">PRICING</Button>
 
                         <Button sx={{ml: 5}} variant='text' onClick={goToAboutUs} color="secondary">ABOUT US</Button>
+                        
 
                         { isLogged ? '' : <Button sx={{ml: 5}} variant='outlined' onClick={goToLogin} color="secondary">LOGIN</Button>}
+                        
                     </Typography>
 
+                    { isLogged ? <Avatar  alt="Cindy Baker" src="/static/images/avatar/3.jpg" /> : ''}
+                    
                 </Toolbar>
             </AppBar>
         </Box>

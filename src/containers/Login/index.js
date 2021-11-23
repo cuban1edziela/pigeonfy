@@ -12,9 +12,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useTheme, ThemeProvider } from '@mui/material/styles';
-import {  useDispatch} from 'react-redux'
-import { login } from '../../actions'
- 
+import {  useDispatch} from 'react-redux';
+import { login } from '../../actions';
+import { useHistory } from 'react-router-dom';
+
 
 function Copyright(props) {
   return (
@@ -33,6 +34,7 @@ export default function SignIn() {
 
   const theme = useTheme();
   const dispatch = useDispatch();
+  const history = useHistory();
 
 
   const handleSubmit = (event) => {
@@ -45,6 +47,8 @@ export default function SignIn() {
       email: data.get('email'),
       password: data.get('password'),
     });
+
+    history.push('/')
   };
 
   return (
