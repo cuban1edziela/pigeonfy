@@ -4,3 +4,9 @@ export const login = () => {
     };
 };
 
+export const setUser = () => {
+    return{
+        type: 'SET-USER'
+    };
+}
+

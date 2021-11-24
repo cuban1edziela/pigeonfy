@@ -7,6 +7,7 @@ import ContactBook from "./containers/ContactBook";
 import Pricing from "./containers/Pricing";
 import Login from "./containers/Login";
 import SignUp from "./containers/SignUp";
+import UsersProfile from './containers/UsersProfile'
 import * as React from "react";
 
 export const Routes = () => {
@@ -43,6 +44,10 @@ export const Routes = () => {
 
                 <Route path='/sign-up'>
                     <SignUp/>
+                </Route>
+
+                <Route path='/profile'>
+                    <UsersProfile />
                 </Route>
 
             </Switch>

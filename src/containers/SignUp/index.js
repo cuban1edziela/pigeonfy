@@ -11,7 +11,12 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { useTheme, ThemeProvider } from '@mui/material/styles';
-import PigeonPencil from './PigeonPencil.svg'
+import PigeonPencil from './PigeonPencil.svg';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { useHistory } from 'react-router-dom';
+import { login } from '../../actions';
+import { setUser } from '../../actions'; 
+import { useDispatch } from 'react-redux';
 
 function Copyright(props) {
     return (
@@ -26,19 +31,32 @@ function Copyright(props) {
     );
 }
 
+
 export default function SignUp() {
 
     const theme = useTheme();
-
+    const auth = getAuth();
+    const history = useHistory();
+    const dispatch = useDispatch();
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        const email = data.get('email')
+        const password = data.get('password')
+
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                console.log(userCredential.user)
+                dispatch(login())
+                history.push('/')
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                alert('Invalid input format. Enter valid email and password')
+            });
     };
 
     return (
@@ -123,7 +141,6 @@ export default function SignUp() {
                                 type="submit"
                                 fullWidth
                                 variant="contained"
-                                href='/pricing'
                                 sx={{ mt: 3, mb: 2, color: 'primary.main', bgcolor: 'secondary.main' }}
                             >
                                 Sign Up

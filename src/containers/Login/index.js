@@ -12,9 +12,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useTheme, ThemeProvider } from '@mui/material/styles';
-import {  useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { login } from '../../actions';
 import { useHistory } from 'react-router-dom';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 
 function Copyright(props) {
@@ -35,20 +36,28 @@ export default function SignIn() {
   const theme = useTheme();
   const dispatch = useDispatch();
   const history = useHistory();
-
+  const auth = getAuth();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    dispatch(login())
-    
-    
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
 
-    history.push('/')
+    const email = data.get('email')
+    const password = data.get('password')
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        dispatch(login())
+        history.push('/')
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert('Invalid email or password')
+      });
+  
   };
 
   return (
@@ -97,13 +106,13 @@ export default function SignIn() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2, color: 'primary.main', bgcolor: 'secondary.main'}}
+              sx={{ mt: 3, mb: 2, color: 'primary.main', bgcolor: 'secondary.main' }}
             >
               Sign In
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link color='secondary.main'href="#" variant="body2">
+                <Link color='secondary.main' href="#" variant="body2">
                   Forgot password?
                 </Link>
               </Grid>
