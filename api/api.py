@@ -25,8 +25,7 @@ def encipher_user_message():
     message = recieved_file['message']
     n = recieved_file['n']
     e = recieved_file['e']
-    print('n equals to', n, 'e equals to', e)
-    enciphered_message = enciphering.encipher(message, n, e)
+    enciphered_message = enciphering.encipher(message, int(n), int(e))
     return jsonify(response=enciphered_message)
 
 
