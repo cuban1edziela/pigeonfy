@@ -50,11 +50,12 @@ export default function SimpleContainer() {
 
     const handleChange = (event) => {
         const value = event.target.value
-        if (value === "" || value.match(/^[0-9]+$/) || value.match(/^[A-Z]+$/) || value.match(/^[a-z]+$/)) {
-            setMessage(event.target.value);
-        }else{
-            alert('Invalid input format. Please enter only numbers and letters without commas.')
-        }
+        setMessage(event.target.value);
+        // if (value === "" || value.match(/^[0-9]+$/) || value.match(/^[A-Z]+$/) || value.match(/^[a-z]+$/)) {
+        //     setMessage(event.target.value);
+        // }else{
+        //     alert('Invalid input format. Please enter only numbers and letters without commas.')
+        // }
     }
 
     const handleChangeN = (event) => {

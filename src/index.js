@@ -10,14 +10,16 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import allReducers from './reducers'
 import { initializeApp } from "firebase/app";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDaYStMTdnjjpEbBJpT9GMdaat8DVm6Kc4",
-  authDomain: "pigeonfy-1989.firebaseapp.com",
-  projectId: "pigeonfy-1989",
-  storageBucket: "pigeonfy-1989.appspot.com",
-  messagingSenderId: "569786070051",
-  appId: "1:569786070051:web:bfbdb3d00a8c85c6ad6d96"
+    apiKey: "AIzaSyDaYStMTdnjjpEbBJpT9GMdaat8DVm6Kc4",
+    authDomain: "pigeonfy-1989.firebaseapp.com",
+    projectId: "pigeonfy-1989",
+    storageBucket: "pigeonfy-1989.appspot.com",
+    messagingSenderId: "569786070051",
+    appId: "1:569786070051:web:bfbdb3d00a8c85c6ad6d96"
 };
 
 // Initialize Firebase
@@ -47,17 +49,17 @@ const theme = createTheme({
 })
 
 ReactDOM.render(
-    <Provider store={store}>
-        <React.StrictMode>
+    <React.StrictMode>
+        <Provider store={store}>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <Router>
                     <App />
+                    <ToastContainer />
                 </Router>
             </ThemeProvider>
-
-        </React.StrictMode>
-    </Provider>,
+        </Provider>
+    </React.StrictMode>,
 
     document.getElementById('root')
 );

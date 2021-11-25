@@ -16,6 +16,7 @@ import { useDispatch } from 'react-redux';
 import { login } from '../../actions';
 import { useHistory } from 'react-router-dom';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { toast } from 'react-toastify';
 
 
 function Copyright(props) {
@@ -55,7 +56,7 @@ export default function SignIn() {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        alert('Invalid email or password')
+        toast('Invalid email or password')
       });
   
   };
