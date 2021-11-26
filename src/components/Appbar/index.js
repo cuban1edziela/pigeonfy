@@ -13,13 +13,13 @@ import { useSelector } from 'react-redux';
 export default function ButtonAppBar() {
 
     const history = useHistory();
-    const isLogged = useSelector(state => state.session)
+    const session = useSelector(state => state.session)
 
-    const goToEnciphering = () => history.push('/encipher')
-    const goToDeciphering = () => history.push('/decipher')
-    const goToContactBook = () => history.push('/contact-book')
-    const goToPricing = () => history.push('/pricing')
-    const goToAboutUs = () => history.push('/about-us')
+    const goToEnciphering = () => {session.isAuthenticated ? history.push('/encipher') : history.push('/login')};
+    const goToDeciphering = () => {session.isAuthenticated ?  history.push('/decipher') : history.push('/login')};
+    const goToContactBook = () => {session.isAuthenticated ?  history.push('/contact-book') : history.push('/login')};
+    const goToPricing = () => {session.isAuthenticated ?  history.push('/pricing') : history.push('/login')}
+    const goToAboutUs = () => {session.isAuthenticated ?  history.push('/about-us') : history.push('/login')}
     const goToLogin = () => history.push('/login')
 
     return (
@@ -46,12 +46,12 @@ export default function ButtonAppBar() {
                         <Button sx={{ ml: 5 }} variant='text' onClick={goToAboutUs} color="secondary">ABOUT US</Button>
 
 
-                        {isLogged.isAuthenticated ? '' : <Button sx={{ ml: 5 }} variant='outlined' onClick={goToLogin} color="secondary">LOGIN</Button>}
+                        {session.isAuthenticated ? '' : <Button sx={{ ml: 5 }} variant='outlined' onClick={goToLogin} color="secondary">LOGIN</Button>}
 
                     </Typography>
 
-                    {isLogged.isAuthenticated ?  <Link to='/profile'>
-                        <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
+                    {session.isAuthenticated ?  <Link to='/profile'>
+                        <Avatar alt={session.user.displayName} src="/static/images/avatar/3.jpg" />
                     </Link> : ''}
 
                 </Toolbar>

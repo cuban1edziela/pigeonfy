@@ -14,9 +14,11 @@ import { useSelector, useDispatch} from 'react-redux';
 import { toast } from 'react-toastify';
 import { init } from '../../slices/sessionSlice'
 import { useHistory } from 'react-router';
+import { useTheme } from '@mui/material/styles'
 
 export default function InputWithIcon() {
 
+    const theme = useTheme();
     const session = useSelector(state => state.session);
     const history = useHistory();
     const dispatch = useDispatch();
@@ -26,7 +28,6 @@ export default function InputWithIcon() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         await dispatch(logoutFromApp())
-
     };
     
     if(session.error && session.error.message) {
@@ -43,6 +44,9 @@ export default function InputWithIcon() {
 
     return (
         <Box sx={{ '& > :not(style)': { m: 1 } }}>
+
+            <h1>Welcome <span style={{color: theme.palette.secondary.main}}> {session.user.displayName} </span></h1>
+            
             <FormControl variant="standard">
                 <InputLabel htmlFor="input-with-icon-adornment">
                     Email
@@ -69,7 +73,7 @@ export default function InputWithIcon() {
                 variant="standard"
             />
             <Box sx={{ display: 'inline-flex', pl: 5 }}>
-                <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
+                <Avatar alt={session.user.displayName} src="/static/images/avatar/3.jpg" />
             </Box>
 
             <Box sx={{ display: 'inline-flex', pl: 5 }}>
