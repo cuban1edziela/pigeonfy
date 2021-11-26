@@ -7,8 +7,6 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { useState } from 'react';
 import axios from 'axios';
 import PigeonCage from './PigeonCage.svg';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 
 export default function SimpleContainer() {
     const theme = useTheme()
@@ -17,8 +15,6 @@ export default function SimpleContainer() {
     const [e, setE] = useState('');
     const [loading, setLoading] = useState(false);
     const [cipheredMessage, setCipheredMessage] = useState('');
-    const isLogged = useSelector(state => state.isLogged);
-    const history = useHistory();
 
     const handleClick = () => {
         setLoading(true);
@@ -48,15 +44,7 @@ export default function SimpleContainer() {
 
     };
 
-    const handleChange = (event) => {
-        const value = event.target.value
-        setMessage(event.target.value);
-        // if (value === "" || value.match(/^[0-9]+$/) || value.match(/^[A-Z]+$/) || value.match(/^[a-z]+$/)) {
-        //     setMessage(event.target.value);
-        // }else{
-        //     alert('Invalid input format. Please enter only numbers and letters without commas.')
-        // }
-    }
+    const handleChange = (event) => setMessage(event.target.value);
 
     const handleChangeN = (event) => {
         const value = event.target.value
@@ -72,22 +60,22 @@ export default function SimpleContainer() {
     }
 
     return (
-        <div style={{width: '100%'}}>
+        <div style={{ width: '100%' }}>
 
 
-            <Box sx={{display: 'inline-flex', pl: 5}}>
+            <Box sx={{ display: 'inline-flex', pl: 5 }}>
                 <Typography variant="h5" component="div" color='textPrimary'>
-                    ENCIPHER YOUR <span style={{color: theme.palette.secondary.main}}> MESSAGE </span> FOR <span
-                    style={{color: theme.palette.secondary.main}}> FREE </span>
+                    ENCIPHER YOUR <span style={{ color: theme.palette.secondary.main }}> MESSAGE </span> FOR <span
+                        style={{ color: theme.palette.secondary.main }}> FREE </span>
                 </Typography>
 
-                <Box sx={{display: 'inline-flex', width: '100%', pl: 10, pr: 10}}>
+                <Box sx={{ display: 'inline-flex', width: '100%', pl: 10, pr: 10 }}>
                     <TextareaAutosize
                         value={message}
                         aria-label="empty textarea"
                         placeholder="Enter your message here"
                         minRows={5}
-                        style={{width: '80%'}}
+                        style={{ width: '80%' }}
                         onChange={handleChange}
                     />
                     <TextareaAutosize
@@ -95,7 +83,7 @@ export default function SimpleContainer() {
                         aria-label="empty textarea"
                         placeholder="Enter n value here"
                         minRows={5}
-                        style={{width: '10%'}}
+                        style={{ width: '10%' }}
                         onChange={handleChangeN}
                     />
 
@@ -104,19 +92,19 @@ export default function SimpleContainer() {
                         aria-label="empty textarea"
                         placeholder="Enter e value here"
                         minRows={5}
-                        style={{width: '10%'}}
+                        style={{ width: '10%' }}
                         onChange={handleChangeE}
                     />
 
 
-                    <Box sx={{display: 'inline-flex', pl: 2}}>
+                    <Box sx={{ display: 'inline-flex', pl: 2 }}>
                         <LoadingButton
                             onClick={handleClick}
-                            endIcon={<SendIcon/>}
+                            endIcon={<SendIcon />}
                             loading={loading}
                             loadingPosition="end"
                             variant="contained"
-                            sx={{color: theme.palette.secondary.main}}
+                            sx={{ color: theme.palette.secondary.main }}
                         >
                             Encipher
                         </LoadingButton>
@@ -126,15 +114,15 @@ export default function SimpleContainer() {
 
             </Box>
 
-            <Box sx={{display: 'flex', pl: 5}}>
-                <img width='320px' src={PigeonCage} alt="PigeonCage"/>
+            <Box sx={{ display: 'flex', pl: 5 }}>
+                <img width='320px' src={PigeonCage} alt="PigeonCage" />
 
-                <Box sx={{display: 'flex', width: '100%', pl: 10, pr: 10, pt: 10}}>
+                <Box sx={{ display: 'flex', width: '100%', pl: 10, pr: 10, pt: 10 }}>
                     <TextareaAutosize
                         aria-label="empty textarea"
                         placeholder="Your enciphered message will appear here"
                         minRows={5}
-                        style={{width: '100%'}}
+                        style={{ width: '100%' }}
                         value={cipheredMessage}
                     />
 

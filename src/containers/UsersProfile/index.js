@@ -7,27 +7,9 @@ import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Avatar from '@mui/material/Avatar';
-import { getAuth, signOut } from "firebase/auth";
-import { useDispatch } from 'react-redux';
-import { login } from '../../actions';
 import Button from '@mui/material/Button';
-import { useHistory } from 'react-router-dom';
 
 export default function InputWithIcon() {
-
-    const auth = getAuth();
-    const history = useHistory();
-    const dispatch = useDispatch();
-
-    const logout = () => {
-        signOut(auth).then(() => {
-            dispatch(login())
-            history.push('/')
-        }).catch((error) => {
-            alert('Couldnt log out. Try again later')
-        });
-    }
-
 
     return (
         <Box sx={{ '& > :not(style)': { m: 1 } }}>
@@ -63,7 +45,6 @@ export default function InputWithIcon() {
             <Box sx={{ display: 'inline-flex', pl: 5 }}>
                 <Button
                     variant='outlined'
-                    onClick={logout}
                     color="secondary">
                     LOG OUT
                 </Button>

@@ -7,15 +7,13 @@ import Button from '@mui/material/Button';
 import Logo from './logo.svg'
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import { useSelector } from 'react-redux';
 import Avatar from '@mui/material/Avatar';
-
-
+import { useSelector } from 'react-redux';
 
 export default function ButtonAppBar() {
 
     const history = useHistory();
-    const isLogged = useSelector(state => state.isLogged);
+    const isLogged = useSelector(state => state.isAuthenticated)
 
     const goToEnciphering = () => history.push('/encipher')
     const goToDeciphering = () => history.push('/decipher')

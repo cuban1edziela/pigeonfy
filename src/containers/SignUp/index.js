@@ -12,11 +12,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { useTheme, ThemeProvider } from '@mui/material/styles';
 import PigeonPencil from './PigeonPencil.svg';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useHistory } from 'react-router-dom';
-import { login } from '../../actions';
-import { setUser } from '../../actions'; 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import {createNewUser} from "../../services/signUp";
 
 function Copyright(props) {
     return (
@@ -35,28 +33,24 @@ function Copyright(props) {
 export default function SignUp() {
 
     const theme = useTheme();
-    const auth = getAuth();
     const history = useHistory();
     const dispatch = useDispatch();
+    const signUp = useSelector(state => state.signUp)
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async(event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        const email = data.get('email')
-        const password = data.get('password')
 
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                console.log(userCredential.user)
-                dispatch(login())
-                history.push('/')
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                alert('Invalid input format. Enter valid email and password')
-            });
+        const newUser = {
+            name: data.get('firstName'),
+            surname: data.get('lastName'),
+            email: data.get('email'),
+            password: data.get('password'),
+        }
+        await dispatch(createNewUser(newUser))
+        if (signUp.success && !signUp.loading) {
+            history.push('/')
+        }
     };
 
     return (

@@ -12,10 +12,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useTheme, ThemeProvider } from '@mui/material/styles';
-import { useDispatch } from 'react-redux';
-import { login } from '../../actions';
-import { useHistory } from 'react-router-dom';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { toast } from 'react-toastify';
 
 
@@ -35,29 +31,14 @@ function Copyright(props) {
 export default function SignIn() {
 
   const theme = useTheme();
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const auth = getAuth();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    toast('wykurwqiaj')
+    // const data = new FormData(event.currentTarget);
 
-    const email = data.get('email')
-    const password = data.get('password')
-
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in 
-        const user = userCredential.user;
-        dispatch(login())
-        history.push('/')
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        toast('Invalid email or password')
-      });
+    // const email = data.get('email')
+    // const password = data.get('password')
   
   };
 

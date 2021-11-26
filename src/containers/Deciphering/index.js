@@ -7,16 +7,12 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { useState } from 'react';
 import axios from 'axios';
 import PigeonKey from './PigeonKey.svg';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 
 export default function SimpleContainer() {
     const theme = useTheme();
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
     const [cipheredMessage, setCipheredMessage] = useState('');
-    const isLogged = useSelector(state => state.isLogged);
-    const history = useHistory()
 
     const handleClick = () => {
         setLoading(true);
