@@ -13,7 +13,11 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useTheme, ThemeProvider } from '@mui/material/styles';
 import { toast } from 'react-toastify';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { loginWithEmailAndPassword } from '../../services/session';
+import { UnderLoad } from '../loading';
+import { init } from '../../slices/sessionSlice'
+import { useHistory } from 'react-router';
 
 function Copyright(props) {
   return (
@@ -31,16 +35,36 @@ function Copyright(props) {
 export default function SignIn() {
 
   const theme = useTheme();
+  const history = useHistory();
+  const session = useSelector(state => state.session);
+  const dispatch = useDispatch();
 
-  const handleSubmit = (event) => {
+  if (session.loading) {
+    return UnderLoad()
+  }
+
+  dispatch(init())
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    toast('wykurwqiaj')
-    // const data = new FormData(event.currentTarget);
+    const data = new FormData(event.currentTarget);
 
-    // const email = data.get('email')
-    // const password = data.get('password')
-  
+    const email = data.get('email');
+    const password = data.get('password');
+    await dispatch(loginWithEmailAndPassword(email, password))
   };
+
+  if (session.error && session.error.message) {
+    return (
+      toast(session.error.message)
+    );
+  }
+  if (session.loading) {
+    return UnderLoad()
+  }
+  if (session.isAuthenticated) {
+    history.push('/')
+  }
 
   return (
     <ThemeProvider theme={theme}>

@@ -2,6 +2,7 @@ import {createUserWithEmailAndPassword, sendEmailVerification, updateProfile} fr
 import {auth, firestore} from "../firebase";
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {doc, setDoc} from "firebase/firestore";
+import { toast } from "react-toastify";
 
 export const userCollectionName = "users"
 export const createNewUser = createAsyncThunk("signUp/createNewUser", async (newUser, {rejectWithValue}) => {
@@ -18,6 +19,7 @@ export const createNewUser = createAsyncThunk("signUp/createNewUser", async (new
             firebaseUser: userCredential.user
         }
     } catch (err) {
+        toast('Couldnt create the account. Try again later')
         return rejectWithValue(err)
     }
 });

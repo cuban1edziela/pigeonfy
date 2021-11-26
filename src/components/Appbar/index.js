@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 export default function ButtonAppBar() {
 
     const history = useHistory();
-    const isLogged = useSelector(state => state.isAuthenticated)
+    const isLogged = useSelector(state => state.session)
 
     const goToEnciphering = () => history.push('/encipher')
     const goToDeciphering = () => history.push('/decipher')
@@ -46,11 +46,11 @@ export default function ButtonAppBar() {
                         <Button sx={{ ml: 5 }} variant='text' onClick={goToAboutUs} color="secondary">ABOUT US</Button>
 
 
-                        {isLogged ? '' : <Button sx={{ ml: 5 }} variant='outlined' onClick={goToLogin} color="secondary">LOGIN</Button>}
+                        {isLogged.isAuthenticated ? '' : <Button sx={{ ml: 5 }} variant='outlined' onClick={goToLogin} color="secondary">LOGIN</Button>}
 
                     </Typography>
 
-                    {isLogged ?  <Link to='/profile'>
+                    {isLogged.isAuthenticated ?  <Link to='/profile'>
                         <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
                     </Link> : ''}
 

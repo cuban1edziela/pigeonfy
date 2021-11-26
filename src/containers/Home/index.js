@@ -7,12 +7,21 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { useHistory } from "react-router-dom";
 import { useTheme } from '@mui/material/styles'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { init } from '../../slices/sessionSlice';
+import { UnderLoad } from '../loading';
 
 export default function SimpleContainer() {
     const history = useHistory();
     const theme = useTheme()
-    const isLogged = useSelector(state => state.isLogged)
+    const session = useSelector(state => state.session)
+    const dispatch = useDispatch();
+
+    if(session.loading) {
+        return UnderLoad()
+    }
+
+    dispatch(init())
 
     const goToSignUp = () => {
         history.push('/sign-up')
@@ -29,7 +38,7 @@ export default function SimpleContainer() {
                     <Box sx={{ width: '50%', display: 'flex', m: 'auto' }}>
                         <Stack spacing={5}>
 
-                            {isLogged ? <Typography variant="h3" component="div" color='textPrimary'>
+                            {session.isAuthenticated ? <Typography variant="h3" component="div" color='textPrimary'>
                                 Thank <span style={{ color: theme.palette.secondary.main }}> You  </span> for
                                 being with <span style={{ color: theme.palette.secondary.main }}> us </span>
                             </Typography> :
@@ -48,7 +57,7 @@ export default function SimpleContainer() {
                                 m: 'auto'
                             }}>
 
-                                {isLogged ?
+                                {session.isAuthenticated ?
                                     <Button
                                         onClick={goToEncipher}
                                         sx={{ color: 'textPrimary' }}

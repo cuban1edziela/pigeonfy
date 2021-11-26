@@ -11,7 +11,6 @@ const initialState = {
 export const signUpSlice = createSlice({
     name: "signUp",
     initialState,
-    reducers: {},
     extraReducers: {
         [createNewUser.pending.type]: (state) => {
             state.loading = true
