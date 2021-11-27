@@ -11,14 +11,15 @@ const initialState = {
 export const signUpSlice = createSlice({
     name: "signUp",
     initialState,
+    reducers: {},
     extraReducers: {
         [createNewUser.pending.type]: (state) => {
             state.loading = true
         },
         [createNewUser.fulfilled.type]: (state, action) => {
+            state.success = true
             state.loading = false
             state.newUser = action.payload
-            state.success = true
         },
         [createNewUser.rejected.type]: (state, action) => {
             state.loading = false

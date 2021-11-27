@@ -12,9 +12,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { useTheme, ThemeProvider } from '@mui/material/styles';
 import PigeonPencil from './PigeonPencil.svg';
-import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {createNewUser} from "../../services/signUp";
+import { UnderLoad } from '../loading';
 
 function Copyright(props) {
     return (
@@ -33,7 +33,6 @@ function Copyright(props) {
 export default function SignUp() {
 
     const theme = useTheme();
-    const history = useHistory();
     const dispatch = useDispatch();
     const signUp = useSelector(state => state.signUp)
 
@@ -48,8 +47,9 @@ export default function SignUp() {
             password: data.get('password'),
         }
         await dispatch(createNewUser(newUser))
-        if (signUp.success && !signUp.loading) {
-            history.push('/')
+
+        if(signUp.loading && signUp.success) {
+            return UnderLoad()
         }
     };
 

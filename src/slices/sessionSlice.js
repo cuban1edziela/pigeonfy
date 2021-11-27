@@ -22,8 +22,8 @@ export const sessionSlice = createSlice({
             state.user = action.payload
         },
         loginFailure: (state, action) => {
-            state = initialState;
             state.error = action.payload
+            state.loading = true
         },
         loginFinish: (state) => {
             state.loading = false

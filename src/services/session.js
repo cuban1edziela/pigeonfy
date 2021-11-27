@@ -1,10 +1,10 @@
 import {signInWithEmailAndPassword as signIn, signOut} from "firebase/auth";
+import { toast } from "react-toastify";
 import {auth} from "../firebase";
 import {
     refreshAuthFailure,
     refreshAuthFinish,
     refreshAuthSuccess,
-    loginFailure,
     loginFinish,
     loginSuccess,
     refreshAuthInit,
@@ -18,8 +18,8 @@ export const loginWithEmailAndPassword = (email, password) => {
         try {
             const user = await signIn(auth, email, password);
             dispatch(loginSuccess(user.user))
-        } catch (error) {
-            dispatch(loginFailure(error))
+        } catch {
+            toast('Error occured. Invalid password or email.')
         } finally {
             dispatch(loginFinish())
         }

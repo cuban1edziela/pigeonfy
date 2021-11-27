@@ -12,7 +12,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useTheme, ThemeProvider } from '@mui/material/styles';
-import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginWithEmailAndPassword } from '../../services/session';
 import { UnderLoad } from '../loading';
@@ -54,11 +53,6 @@ export default function SignIn() {
     await dispatch(loginWithEmailAndPassword(email, password))
   };
 
-  if (session.error && session.error.message) {
-    return (
-      toast(session.error.message)
-    );
-  }
   if (session.loading) {
     return UnderLoad()
   }

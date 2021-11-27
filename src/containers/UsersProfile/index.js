@@ -45,7 +45,7 @@ export default function InputWithIcon() {
     return (
         <Box sx={{ '& > :not(style)': { m: 1 } }}>
 
-            <h1>Welcome <span style={{color: theme.palette.secondary.main}}> {session.user.displayName} </span></h1>
+            <h1>Welcome <span style={{color: theme.palette.secondary.main}}> {session.user?.displayName} </span></h1>
             
             <FormControl variant="standard">
                 <InputLabel htmlFor="input-with-icon-adornment">
@@ -73,7 +73,7 @@ export default function InputWithIcon() {
                 variant="standard"
             />
             <Box sx={{ display: 'inline-flex', pl: 5 }}>
-                <Avatar alt={session.user.displayName} src="/static/images/avatar/3.jpg" />
+                <Avatar alt={session.user?.displayName} src="/static/images/avatar/3.jpg" />
             </Box>
 
             <Box sx={{ display: 'inline-flex', pl: 5 }}>
