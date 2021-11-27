@@ -19,7 +19,7 @@ export const loginWithEmailAndPassword = (email, password) => {
             const user = await signIn(auth, email, password);
             dispatch(loginSuccess(user.user))
         } catch {
-            toast('Error occured. Invalid password or email.')
+            toast.error('Error occured. Invalid password or email.')
         } finally {
             dispatch(loginFinish())
         }
@@ -42,5 +42,6 @@ export const logoutFromApp = () => {
     return async (dispatch) => {
         await signOut(auth)
         dispatch(logout())
+        toast.success('Logged out successfully')
     }
 }

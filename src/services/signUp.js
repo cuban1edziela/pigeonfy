@@ -14,12 +14,13 @@ export const createNewUser = createAsyncThunk("signUp/createNewUser", async (new
         const userDoc = doc(firestore, userCollectionName, userCredential.user.uid)
         await setDoc(userDoc, {})
         sendEmailVerification(userCredential.user)
+        toast.success('Account successfully created')
         return {
             newUser: newUser,
             firebaseUser: userCredential.user
         }
     } catch (err) {
-        toast('Couldnt create the account. Try again later')
+        toast.error('Couldnt create the account. Try again later')
         return rejectWithValue(err)
     }
 });
