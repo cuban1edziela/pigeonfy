@@ -13,8 +13,9 @@ import Typography from '@mui/material/Typography';
 import { useTheme, ThemeProvider } from '@mui/material/styles';
 import PigeonPencil from './PigeonPencil.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import {createNewUser} from "../../services/signUp";
+import { createNewUser } from "../../services/signUp";
 import { UnderLoad } from '../loading';
+import { useHistory } from 'react-router-dom';
 
 function Copyright(props) {
     return (
@@ -35,8 +36,11 @@ export default function SignUp() {
     const theme = useTheme();
     const dispatch = useDispatch();
     const signUp = useSelector(state => state.signUp)
+    const history = useHistory();
 
-    const handleSubmit = async(event) => {
+    const goToLogin = () => { history.push('/login') };
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
 
@@ -47,11 +51,15 @@ export default function SignUp() {
             password: data.get('password'),
         }
         await dispatch(createNewUser(newUser))
-
-        if(signUp.loading && signUp.success) {
-            return UnderLoad()
-        }
     };
+
+    if (signUp.loading) {
+        return UnderLoad()
+    }
+
+    if (signUp.success && !signUp.loading) {
+        history.push('/');
+    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -141,7 +149,7 @@ export default function SignUp() {
                             </Button>
                             <Grid container justifyContent="flex-end">
                                 <Grid item>
-                                    <Link color='secondary' href="/login" variant="body2">
+                                    <Link color='secondary' onClick={goToLogin} variant="body2">
                                         Already have an account? Sign in
                                     </Link>
                                 </Grid>

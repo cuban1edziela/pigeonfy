@@ -11,11 +11,8 @@ export const sessionSlice = createSlice({
     name: "session",
     initialState,
     reducers: {
-        load: (state) => {
-            state.loading = true
-        },
         init: (state) => {
-            state.loading = false
+            state.loading = true
         },
         loginSuccess: (state, action) => {
             state.isAuthenticated = true
@@ -50,7 +47,6 @@ export const sessionSlice = createSlice({
 })
 
 export const {
-    load,
     init,
     loginSuccess,
     loginFailure,

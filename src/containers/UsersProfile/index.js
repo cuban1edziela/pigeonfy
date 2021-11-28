@@ -12,7 +12,6 @@ import { logoutFromApp } from '../../services/session';
 import { UnderLoad } from '../loading';
 import { useSelector, useDispatch} from 'react-redux';
 import { toast } from 'react-toastify';
-import { init } from '../../slices/sessionSlice'
 import { useHistory } from 'react-router';
 import { useTheme } from '@mui/material/styles'
 
@@ -22,8 +21,6 @@ export default function InputWithIcon() {
     const session = useSelector(state => state.session);
     const history = useHistory();
     const dispatch = useDispatch();
-
-    dispatch(init())
 
     const handleSubmit = async (event) => {
         event.preventDefault();

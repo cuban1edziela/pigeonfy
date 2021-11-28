@@ -9,17 +9,15 @@ import {
     loginSuccess,
     refreshAuthInit,
     logout,
-    load
 } from "../slices/sessionSlice";
 
 export const loginWithEmailAndPassword = (email, password) => {
     return async (dispatch) => {
-        dispatch(load())
         try {
             const user = await signIn(auth, email, password);
             dispatch(loginSuccess(user.user))
-        } catch {
-            toast.error('Error occured. Invalid password or email.')
+        } catch(e) {
+            toast.error((e.code).slice(5, e.code.length))
         } finally {
             dispatch(loginFinish())
         }

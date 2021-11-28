@@ -41,10 +41,6 @@ export default function SimpleContainer() {
 
         <div style={{ width: '100%' }}>
 
-            {/* if (isLogged === false){
-                history.push('/sign-up')
-            } */}
-
             <Box sx={{ display: 'flex', pl: 5 }}>
                 <Typography variant="h5" component="div" color='textPrimary'>
                     DECIPHER A <span style={{ color: '#d49d40' }}> MESSAGE </span>

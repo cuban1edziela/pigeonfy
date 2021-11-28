@@ -19,8 +19,8 @@ export const createNewUser = createAsyncThunk("signUp/createNewUser", async (new
             newUser: newUser,
             firebaseUser: userCredential.user
         }
-    } catch (err) {
-        toast.error('Couldnt create the account. Try again later')
-        return rejectWithValue(err)
+    } catch (e) {
+        toast.error((e.code).slice(5, e.code.length))
+        return rejectWithValue(e)
     }
 });

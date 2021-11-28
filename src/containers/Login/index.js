@@ -15,7 +15,6 @@ import { useTheme, ThemeProvider } from '@mui/material/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginWithEmailAndPassword } from '../../services/session';
 import { UnderLoad } from '../loading';
-import { init } from '../../slices/sessionSlice'
 import { useHistory } from 'react-router';
 
 function Copyright(props) {
@@ -38,11 +37,11 @@ export default function SignIn() {
   const session = useSelector(state => state.session);
   const dispatch = useDispatch();
 
+  const goToSignUp = () => {history.push('/sign-up')}
+
   if (session.loading) {
     return UnderLoad()
   }
-
-  dispatch(init())
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -112,12 +111,12 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link color='secondary.main' href="#" variant="body2">
+                <Link color='secondary.main' variant="body2">
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
-                <Link color='secondary.main' href="/sign-up" variant="body2">
+                <Link color='secondary.main' onClick={goToSignUp} variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

@@ -7,21 +7,17 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { useHistory } from "react-router-dom";
 import { useTheme } from '@mui/material/styles'
-import { useSelector, useDispatch } from 'react-redux';
-import { init } from '../../slices/sessionSlice';
+import { useSelector } from 'react-redux';
 import { UnderLoad } from '../loading';
 
 export default function SimpleContainer() {
     const history = useHistory();
     const theme = useTheme()
     const session = useSelector(state => state.session)
-    const dispatch = useDispatch();
 
     if(session.loading) {
         return UnderLoad()
     }
-
-    dispatch(init())
 
     const goToSignUp = () => {
         history.push('/sign-up')
