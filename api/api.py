@@ -1,16 +1,15 @@
 from flask import Flask
 from flask import *
+import sqlalchemy
 from db import Database
 from flask_cors import *
 import enciphering
 import deciphering
-
-db = Database('contacts.db')
-list = []
-for row in db.fetch():
-    list.append(row)
+# from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+# db = SQLAlchemy(app)
 CORS(app)
 
 
@@ -37,10 +36,11 @@ def decipher_user_message():
     deciphered_message = deciphering.decipher(message)
     return jsonify(response=deciphered_message)
 
+@app.route('/user-table', methods=['GET', 'POST'])
+def create_user_table():
+    recieved_file = request.json
+    user_uid = recieved_file['uid']
 
-@app.route('/contacts', methods=['GET', 'POST'])
-def get_contacts():
-    return jsonify(list)
 
 
 app.run()

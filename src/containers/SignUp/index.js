@@ -35,7 +35,7 @@ export default function SignUp() {
 
     const theme = useTheme();
     const dispatch = useDispatch();
-    const signUp = useSelector(state => state.signUp)
+    const signUp = useSelector(state => state.signUp);
     const history = useHistory();
 
     const goToLogin = () => { history.push('/login') };

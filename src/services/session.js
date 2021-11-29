@@ -16,6 +16,7 @@ export const loginWithEmailAndPassword = (email, password) => {
         try {
             const user = await signIn(auth, email, password);
             dispatch(loginSuccess(user.user))
+            toast.success('Logged in successfully');
         } catch(e) {
             toast.error((e.code).slice(5, e.code.length))
         } finally {

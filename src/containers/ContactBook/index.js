@@ -1,44 +1,72 @@
-import { DataGrid } from '@mui/x-data-grid';
-import { useTheme } from '@mui/material/styles'
+import * as React from 'react';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Checkbox from '@mui/material/Checkbox';
+import IconButton from '@mui/material/IconButton';
+import CommentIcon from '@mui/icons-material/Comment';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import Button from '@mui/material/Button';
+import { setContact } from '../../slices/contactSlice';
 
-const columns = [
-  { field: 'id', headerName: 'ID', width: 100 },
-  { field: 'firstName', headerName: 'First name', width: 130 },
-  { field: 'lastName', headerName: 'Last name', width: 130 },
-  {
-    field: 'n',
-    headerName: 'n',
-    type: 'number',
-    width: 90,
-  },
-  {
-    field: 'e',
-    headerName: 'e',
-    type: 'number',
-    width: 90,
+export default function CheckboxList() {
+
+  const [checked, setChecked] = useState([0]);
+  const dispatch = useDispatch();
+  const contacts = ['Marcin Gorzala', 'Jakub Pet', 'Aneta Popielnica']
+
+  const handleAddContact = () => {
+    console.log('twoja stara')
   }
-  
-];
 
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', n: 35, e:40 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', n: 42, e:16 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', n: 45, e:126 }
-];
+  const handleToggle = (value) => () => {
+    const currentIndex = checked.indexOf(value);
+    const newChecked = [...checked];
 
-export default function DataTable() {
-
-  const theme = useTheme()
+    if (currentIndex === -1) {
+      newChecked.push(value);
+    } else {
+      newChecked.splice(currentIndex, 1);
+    }
+    setChecked(newChecked);
+    dispatch(setContact(newChecked))
+  };
 
   return (
-    <div style={{ height: 400, width: '100%', color: theme.palette.secondary.main }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-        checkboxSelection
-      />
-    </div>
+    <List sx={{ width: '100%', maxWidth: 500, bgcolor: 'primary.main' }}>
+      {contacts.map((value) => {
+        const labelId = `checkbox-list-label-${value}`;
+
+        return (
+          <ListItem
+            key={value}
+            secondaryAction={
+              <IconButton edge="end" color='secondary' aria-label="comments">
+                <CommentIcon />
+              </IconButton>
+            }
+            disablePadding
+          >
+            <ListItemButton role={undefined} onClick={handleToggle(value)} dense>
+              <ListItemIcon>
+                <Checkbox
+                  color='secondary'
+                  edge="start"
+                  checked={checked.indexOf(value) !== -1}
+                  tabIndex={-1}
+                  disableRipple
+                  inputProps={{ 'aria-labelledby': labelId }}
+                />
+              </ListItemIcon>
+              <ListItemText id={labelId} primary={value} />
+            </ListItemButton>
+          </ListItem>
+        );
+      })}
+      <Button sx={{ ml: 5 }} variant='outlined' onClick={handleAddContact} color="secondary">ADD CONTACT</Button>
+    </List>
   );
 }
