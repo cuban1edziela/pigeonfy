@@ -15,6 +15,8 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import axios from "axios";
 import { UnderLoad } from '../loading';
+import { populateContacts } from '../../services/populateContacts';
+import { toast } from 'react-toastify';
 
 export default function CheckboxList() {
 
@@ -30,6 +32,7 @@ export default function CheckboxList() {
 
   const handleAddContact = () => {
     setContactForm(!contactForm)
+    populateContacts(session.user.uid)
   };
 
   const handleSubmit = (event) => {
@@ -53,7 +56,8 @@ export default function CheckboxList() {
     }).catch(function (error) {
       console.log(error);
     });
-
+    setContactForm(!contactForm);
+    toast.success('Contact added succesfully', {position: 'bottom-left'})
   };
 
   const handleToggle = (value) => () => {
@@ -66,7 +70,7 @@ export default function CheckboxList() {
       newChecked.splice(currentIndex, 1);
     }
     setChecked(newChecked);
-    dispatch(setContact(newChecked))
+    dispatch(setContact(newChecked));
   };
 
   return (

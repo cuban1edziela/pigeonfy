@@ -22,7 +22,7 @@ export const createNewUser = createAsyncThunk("signUp/createNewUser", async (new
             console.log(error);
         });
         
-        toast.success('Account successfully created')
+        toast.success('Account successfully created', {position: 'bottom-left'})
 
         return {
             newUser: newUser,

@@ -16,7 +16,7 @@ export const loginWithEmailAndPassword = (email, password) => {
         try {
             const user = await signIn(auth, email, password);
             dispatch(loginSuccess(user.user))
-            toast.success('Logged in successfully');
+            toast.success('Logged in successfully', {position: 'bottom-left'});
         } catch(e) {
             toast.error((e.code).slice(5, e.code.length))
         } finally {
@@ -41,6 +41,6 @@ export const logoutFromApp = () => {
     return async (dispatch) => {
         await signOut(auth)
         dispatch(logout())
-        toast.success('Logged out successfully')
+        toast.success('Logged out successfully', {position: 'bottom-left'})
     }
 }

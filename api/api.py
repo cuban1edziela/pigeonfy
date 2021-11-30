@@ -27,7 +27,7 @@ class Users_contact(db.Model):
     user_uid = db.Column(db.String(28), db.ForeignKey('user.uid'), nullable=False)
 
     def __repr__(self):
-        return f"User('{self.name}', '{self.surname}', '{self.n}', '{self.e}')"
+        return f"(name:'{self.name}' surname:'{self.surname}' n:'{self.n}' e:'{self.e}')"
 
 
 @app.route('/')
@@ -81,5 +81,12 @@ def add_contact():
     db.session.commit()
 
     return jsonify('Contact added successfully')
+
+@app.route('/get-contacts', methods=['GET', 'POST'])
+def get_user_contacts():
+    recieved_file = request.json
+    uid = recieved_file['uid']
+    return jsonify(str(Users_contact.query.filter_by(user_uid=uid).all()))
+
 
 app.run()
