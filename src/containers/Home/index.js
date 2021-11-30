@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { useHistory } from "react-router-dom";
-import { useTheme } from '@mui/material/styles'
+import { useTheme } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 import { UnderLoad } from '../loading';
 

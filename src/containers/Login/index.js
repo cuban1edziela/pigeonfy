@@ -52,9 +52,6 @@ export default function SignIn() {
     await dispatch(loginWithEmailAndPassword(email, password))
   };
 
-  if (session.loading) {
-    return UnderLoad()
-  }
   if (session.isAuthenticated) {
     history.push('/')
   }
