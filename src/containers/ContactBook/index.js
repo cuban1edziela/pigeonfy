@@ -1,4 +1,3 @@
-import * as React from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -13,9 +12,9 @@ import Button from '@mui/material/Button';
 import { setContact } from '../../slices/contactSlice';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import axios from "axios";
 import { UnderLoad } from '../loading';
 import { populateContacts } from '../../services/populateContacts';
+import { addContact } from '../../services/addContact';
 import { toast } from 'react-toastify';
 
 export default function CheckboxList() {
@@ -26,7 +25,7 @@ export default function CheckboxList() {
   const dispatch = useDispatch();
   const contacts = ['Marcin Gorzala', 'Jakub Pet', 'Aneta Popielnica']
 
-  if(session.loading) {
+  if (session.loading) {
     UnderLoad();
   }
 
@@ -45,19 +44,13 @@ export default function CheckboxList() {
     const n = data.get('n');
     const e = data.get('e');
 
-    axios.post('http://127.0.0.1:5000/add-contact', {
-      uid: uid,
-      name: name,
-      surname: surname,
-      n: n,
-      e: e
-    }).then(function (response) {
-      console.log(response);
-    }).catch(function (error) {
-      console.log(error);
-    });
-    setContactForm(!contactForm);
-    toast.success('Contact added succesfully', {position: 'bottom-left'})
+    if (uid === '' || name === '' || surname === '' || n === '' || e === '') {
+      toast.error('Please fill all the required fields.', {position: 'bottom-left'})
+    }
+    else {
+      addContact(uid, name, surname, n, e)
+      setContactForm(!contactForm);
+    }
   };
 
   const handleToggle = (value) => () => {
