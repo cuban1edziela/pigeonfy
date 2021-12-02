@@ -35,7 +35,7 @@ export default function SimpleContainer() {
                         <Stack spacing={5}>
 
                             {session.isAuthenticated ? <Typography variant="h3" component="div" color='textPrimary'>
-                                Thank <span style={{ color: theme.palette.secondary.main }}> You  </span> for
+                                Thank You <span style={{ color: theme.palette.secondary.main }}> {session.user?.displayName}  </span> for
                                 being with <span style={{ color: theme.palette.secondary.main }}> us </span>
                             </Typography> :
                                 <Typography variant="h3" component="div" color='textPrimary'>

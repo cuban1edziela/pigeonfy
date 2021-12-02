@@ -94,6 +94,9 @@ def add_contact():
 def get_user_contacts():
     recieved_file = request.json
     uid = recieved_file['uid']
+
+    if Users_contact.query.filter_by(user_uid=uid).all() == []:
+        return 'No contacts'
     
     for user in Users_contact.query.filter_by(user_uid=uid).all():
        contact = jsonify(

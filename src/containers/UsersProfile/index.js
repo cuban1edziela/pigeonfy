@@ -1,19 +1,15 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Input from '@mui/material/Input';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import { logoutFromApp } from '../../services/session';
 import { UnderLoad } from '../loading';
-import { useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router';
-import { useTheme } from '@mui/material/styles'
+import { useTheme } from '@mui/material/styles';
+import { UpdateProfile } from '../../services/updateProfile';
 
 export default function InputWithIcon() {
 
@@ -22,12 +18,25 @@ export default function InputWithIcon() {
     const history = useHistory();
     const dispatch = useDispatch();
 
+    const handleUpdateProfile = async (event) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+
+        const newProfile = {
+            name: data.get('name'),
+            email: data.get('email')
+        };
+
+        UpdateProfile(newProfile)
+
+    }
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         await dispatch(logoutFromApp())
     };
-    
-    if(session.error && session.error.message) {
+
+    if (session.error && session.error.message) {
         return (
             toast(session.error.message)
         );
@@ -35,40 +44,35 @@ export default function InputWithIcon() {
     if (session.loading) {
         return UnderLoad()
     }
-    if(session.isAuthenticated === false) {
+    if (session.isAuthenticated === false) {
         history.push('/')
     }
 
     return (
         <Box sx={{ '& > :not(style)': { m: 1 } }}>
 
-            <h1>Welcome <span style={{color: theme.palette.secondary.main}}> {session.user?.displayName} </span></h1>
-            
-            <FormControl variant="standard">
-                <InputLabel htmlFor="input-with-icon-adornment">
-                    Email
-                </InputLabel>
-                <Input
-                    id="input-with-icon-adornment"
-                    startAdornment={
-                        <InputAdornment position="start">
-                            <AccountCircle />
-                        </InputAdornment>
-                    }
+            <h1>Welcome <span style={{ color: theme.palette.secondary.main }}> {session.user?.displayName} </span></h1>
+            <Box display='inline-flex' component='form' onSubmit={handleUpdateProfile}>
+                <TextField
+                    id="email"
+                    name='email'
+                    label={session.user?.email}
                 />
-            </FormControl>
-            <TextField
-                id="input-with-icon-textfield"
-                label="TextField"
-                InputProps={{
-                    startAdornment: (
-                        <InputAdornment position="start">
-                            <AccountCircle />
-                        </InputAdornment>
-                    ),
-                }}
-                variant="standard"
-            />
+                <TextField
+                    id="name"
+                    name='name'
+                    label={session.user?.displayName}
+                    sx={{ml: '20px'}}
+                />
+                <Button
+                    sx={{ml:'20px'}}
+                    type="submit"
+                    variant='outlined'
+                    color="secondary">
+                    CHANGE NAME
+                </Button>
+            </Box>
+
             <Box sx={{ display: 'inline-flex', pl: 5 }}>
                 <Avatar alt={session.user?.displayName} src="/static/images/avatar/3.jpg" />
             </Box>

@@ -4,7 +4,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-export const userCollectionName = "users"
 export const createNewUser = createAsyncThunk("signUp/createNewUser", async (newUser, {rejectWithValue}) => {
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, newUser.email, newUser.password)
