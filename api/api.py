@@ -4,13 +4,21 @@ from flask_cors import *
 import enciphering
 import deciphering
 from flask_sqlalchemy import SQLAlchemy
+from dataclasses import dataclass
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users_contacts.db'
 db = SQLAlchemy(app)
 CORS(app)
 
+@dataclass
+class NewUser:
+    name: str
+    n: int
+    e: int
+    id: int
 
+@dataclass
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     uid = db.Column(db.String(28), nullable=False)
@@ -19,7 +27,7 @@ class User(db.Model):
     def __repr__(self):
         return f"User('{self.uid}')"
 
-
+@dataclass
 class Users_contact(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
@@ -94,20 +102,22 @@ def add_contact():
 def get_user_contacts():
     recieved_file = request.json
     uid = recieved_file['uid']
+    contacts = []
 
     if Users_contact.query.filter_by(user_uid=uid).all() == []:
         return 'No contacts'
-    
-    for user in Users_contact.query.filter_by(user_uid=uid).all():
-       contact = jsonify(
-            name=user.name,
-            surname=user.surname,
-            n=user.n,
-            e=user.e,
-            id=user.id
-        )
-        
-    return contact
 
+    for users in Users_contact.query.filter_by(user_uid=uid).all():
+
+        user = NewUser(
+            name=users.name + ' ' + users.surname,
+            n = users.n,
+            e = users.e,
+            id = users.id
+        )
+
+        contacts.append(user)
+        
+    return jsonify(contacts)
 
 app.run()
