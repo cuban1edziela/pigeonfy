@@ -1,4 +1,4 @@
-import {configureStore} from '@reduxjs/toolkit'
+import {configureStore} from '@reduxjs/toolkit';
 import thunkMiddleware from 'redux-thunk';
 import {createLogger} from 'redux-logger';
 import sessionReducer from "./slices/sessionSlice"
@@ -17,3 +17,5 @@ export const store = configureStore({
         serializableCheck: false
     }).concat(loggerMiddleware, thunkMiddleware),
 })
+
+export const dispatch = store.dispatch

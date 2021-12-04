@@ -6,7 +6,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import CommentIcon from '@mui/icons-material/Comment';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import { setContact } from '../../slices/contactSlice';
@@ -17,17 +17,19 @@ import { populateContacts } from '../../services/populateContacts';
 import { addContact } from '../../services/addContact';
 import { toast } from 'react-toastify';
 
-export default function CheckboxList() {
+export default function ContactBook() {
 
+  const session = useSelector(state => state.session);
+  const contact = useSelector(state => state.contact);
   const [contactForm, setContactForm] = useState(false);
   const [checked, setChecked] = useState([0]);
-  const session = useSelector(state => state.session);
+  let [contacts, setContacts] = useState([]);
   const dispatch = useDispatch();
-  const contacts = ['Marcin Gorzala', 'Jakub Pet', 'Aneta Popielnica']
 
-  if (session.loading) {
-    UnderLoad();
-  }
+  useEffect(() => {
+    populateContacts(session.user.uid)
+    setContacts(contact.userContacts)
+  }, [])
 
   const handleAddContact = () => {
     setContactForm(!contactForm)
@@ -45,7 +47,7 @@ export default function CheckboxList() {
     const e = data.get('e');
 
     if (uid === '' || name === '' || surname === '' || n === '' || e === '') {
-      toast.error('Please fill all the required fields.', {position: 'bottom-left'})
+      toast.error('Please fill all the required fields.', { position: 'bottom-left' })
     }
     else {
       addContact(uid, name, surname, n, e)
@@ -65,6 +67,10 @@ export default function CheckboxList() {
     setChecked(newChecked);
     dispatch(setContact(newChecked));
   };
+
+  if (session.loading) {
+    return UnderLoad();
+  }
 
   return (
     <Box sx={{ display: 'inline-flex' }}>
