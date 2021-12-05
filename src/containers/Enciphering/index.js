@@ -4,9 +4,10 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 import { useTheme } from '@mui/material/styles';
 import SendIcon from '@mui/icons-material/Send';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import PigeonCage from './PigeonCage.svg';
+import { useSelector } from 'react-redux';
 
 export default function SimpleContainer() {
     const theme = useTheme()
@@ -15,6 +16,12 @@ export default function SimpleContainer() {
     const [e, setE] = useState('');
     const [loading, setLoading] = useState(false);
     const [cipheredMessage, setCipheredMessage] = useState('');
+    const contact = useSelector(state => state.contact);
+
+    useEffect(() => {
+        setN(contact.contactObjects[contact.userContacts.indexOf(contact.contact[0])]?.n)
+        setE(contact.contactObjects[contact.userContacts.indexOf(contact.contact[0])]?.e)
+      }, [contact.contact])
 
     const handleClick = () => {
         setLoading(true);

@@ -17,6 +17,7 @@ import { populateContacts } from '../../services/populateContacts';
 import { addContact } from '../../services/addContact';
 import { toast } from 'react-toastify';
 import { removeContact } from '../../services/removeContact';
+import { useHistory } from 'react-router';
 
 export default function ContactBook() {
 
@@ -26,6 +27,7 @@ export default function ContactBook() {
   const [contactForm, setContactForm] = useState(false);
   const [checked, setChecked] = useState([]);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const getData = useCallback(() => {
     populateContacts(session.user.uid)
@@ -33,13 +35,17 @@ export default function ContactBook() {
 
   useEffect(() => {
     getData()
+    dispatch(setContact([]));
   }, [getData, contactForm, reload])
 
   const handleAddContact = () => { setContactForm(!contactForm) }
+  const handleOnSendMessage = () => { 
+    history.push('/encipher')
+  }
   const handleRemoveContact = () => { 
     removeContact(contact.contactObjects[contact.userContacts.indexOf(contact.contact[0])]);
+    dispatch(setContact([]));
     setReload(!reload);
-    setChecked([]);
   }
 
 
@@ -77,9 +83,6 @@ export default function ContactBook() {
     dispatch(setContact(newChecked));
   };
 
-  if (session.loading) {
-    return UnderLoad();
-  }
 
   return (
     <Box sx={{ display: 'inline-flex' }}>
@@ -92,7 +95,7 @@ export default function ContactBook() {
               key={value}
               secondaryAction={
                 <IconButton edge="end" color='secondary' aria-label="comments">
-                  <CommentIcon />
+                  <CommentIcon onClick={handleOnSendMessage}/>
                 </IconButton>
               }
               disablePadding
