@@ -9,13 +9,15 @@ import { useHistory } from "react-router-dom";
 import { useTheme } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 import { UnderLoad } from '../loading';
+import PigeonLady from './pigeonlady.json';
+import { Player } from '@lottiefiles/react-lottie-player';
 
 export default function SimpleContainer() {
     const history = useHistory();
     const theme = useTheme()
     const session = useSelector(state => state.session)
 
-    if(session.loading) {
+    if (session.loading) {
         return UnderLoad()
     }
 
@@ -29,9 +31,9 @@ export default function SimpleContainer() {
     return (
         <>
             <Container maxWidth="sm " sx={{ bgcolor: 'primary' }}>
-                <Box sx={{ pt: 2, display: 'flex', flexDirection: 'row' }}>
+                <Box sx={{width: '100%', display: 'flex', flexDirection: 'row' }}>
 
-                    <Box sx={{ width: '50%', display: 'flex', m: 'auto' }}>
+                    <Box sx={{ width: '600px', display: 'flex', m: 'auto'}}>
                         <Stack spacing={5}>
 
                             {session.isAuthenticated ? <Typography variant="h3" component="div" color='textPrimary'>
@@ -77,8 +79,13 @@ export default function SimpleContainer() {
                         </Stack>
                     </Box>
 
-                    <Box sx={{ width: '400px', display: 'block', p: 'auto' }}>
-                        <img src={PigeonImage} alt='PigeonImage' />
+                    <Box sx={{ width: '500px', display: 'flex' }}>
+                        <Player
+                            autoplay
+                            loop
+                            src={PigeonLady}
+                            style={{ height: '500px', width: '500px' }}
+                        />
                     </Box>
 
                 </Box>

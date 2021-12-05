@@ -7,6 +7,7 @@ import ContactBook from "./containers/ContactBook";
 import Pricing from "./containers/Pricing";
 import Login from "./containers/Login";
 import SignUp from "./containers/SignUp";
+import PageNotFound from "./containers/PageNotFound";
 import UsersProfile from './containers/UsersProfile'
 import * as React from "react";
 
@@ -48,6 +49,10 @@ export const Routes = () => {
 
                 <Route path='/profile'>
                     <UsersProfile />
+                </Route>
+
+                <Route path='/*'>
+                    <PageNotFound />
                 </Route>
 
             </Switch>
