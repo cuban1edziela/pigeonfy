@@ -8,6 +8,7 @@ import { refreshAuth } from "./services/session";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import { UnderLoad} from './containers/loading';
+import { setContact } from './slices/contactSlice';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (authUser) => {
             dispatch(refreshAuth(authUser))
+            dispatch(setContact([]))
         }
         );
         return () => {

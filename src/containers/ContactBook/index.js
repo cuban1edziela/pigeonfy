@@ -12,7 +12,6 @@ import Button from '@mui/material/Button';
 import { setContact } from '../../slices/contactSlice';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import { UnderLoad } from '../loading';
 import { populateContacts } from '../../services/populateContacts';
 import { addContact } from '../../services/addContact';
 import { toast } from 'react-toastify';
