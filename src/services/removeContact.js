@@ -2,15 +2,11 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { URL } from '../config'
 
-export const addContact = async (uid, name, surname, n, e) => {
+export const removeContact = async (contactToDelete) => {
 
   try {
-    const res = await axios.post(URL.ADD_CONTACT, {
-      uid: uid,
-      name: name,
-      surname: surname,
-      n: n,
-      e: e
+    const res = await axios.post(URL.REMOVE_CONTACT, {
+      id: contactToDelete.id,
     });
   
     console.log(res);

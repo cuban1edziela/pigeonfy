@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     contact: '',
-    userContacts: []
+    userContacts: [],
+    contactObjects: undefined
 }
 
 export const contactSlice = createSlice({
@@ -14,12 +15,16 @@ export const contactSlice = createSlice({
         },
         setUserContacts: (state, action) => {
             state.userContacts = action.payload
+        },
+        setContactObjects: (state, action) => {
+            state.contactObjects = action.payload
         }
     }
 });
 
 export const {
     setContact,
-    setUserContacts
+    setUserContacts,
+    setContactObjects
 } = contactSlice.actions;
 export default contactSlice.reducer;

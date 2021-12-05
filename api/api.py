@@ -98,6 +98,19 @@ def add_contact():
     return jsonify('Contact added successfully')
 
 
+@app.route('/remove-contact', methods=['GET', 'POST'])
+def remove_contact():
+    recieved_file = request.json
+    contact_id = recieved_file['id']
+    
+    db.session.delete(Users_contact.query.filter_by(id=contact_id).first())
+    db.session.commit()
+
+    return jsonify('Contact removed successfully')
+
+
+
+
 @app.route('/get-contacts', methods=['GET', 'POST'])
 def get_user_contacts():
     recieved_file = request.json

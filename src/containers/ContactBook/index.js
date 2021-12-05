@@ -16,15 +16,16 @@ import { UnderLoad } from '../loading';
 import { populateContacts } from '../../services/populateContacts';
 import { addContact } from '../../services/addContact';
 import { toast } from 'react-toastify';
+import { removeContact } from '../../services/removeContact';
 
 export default function ContactBook() {
 
   const session = useSelector(state => state.session);
   const contact = useSelector(state => state.contact);
+  const [reload, setReload] = useState(true);
   const [contactForm, setContactForm] = useState(false);
-  const [checked, setChecked] = useState([0]);
+  const [checked, setChecked] = useState([]);
   const dispatch = useDispatch();
-
 
   const getData = useCallback(() => {
     populateContacts(session.user.uid)
@@ -32,12 +33,17 @@ export default function ContactBook() {
 
   useEffect(() => {
     getData()
-  }, [getData, contactForm])
+  }, [getData, contactForm, reload])
 
-  const handleAddContact = () => {
-    setContactForm(!contactForm)
-  };
+  const handleAddContact = () => { setContactForm(!contactForm) }
+  const handleRemoveContact = () => { 
+    removeContact(contact.contactObjects[contact.userContacts.indexOf(contact.contact[0])]);
+    setReload(!reload);
+    setChecked([]);
+  }
 
+
+  //adding new contact
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -56,6 +62,7 @@ export default function ContactBook() {
       setContactForm(!contactForm);
     }
   };
+
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -121,7 +128,7 @@ export default function ContactBook() {
           <Button
             sx={{ ml: 5, width: '100%' }}
             variant='outlined'
-            onClick={handleAddContact}
+            onClick={handleRemoveContact}
             color="secondary">
             REMOVE CONTACT
           </Button>

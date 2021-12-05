@@ -18,7 +18,7 @@ export const loginWithEmailAndPassword = (email, password) => {
             dispatch(loginSuccess(user.user))
             toast.success('Logged in successfully', {position: 'bottom-left'});
         } catch(e) {
-            toast.error((e.code).slice(5, e.code.length))
+            toast.error('Wrong password or email', {position: 'bottom-left'})
         } finally {
             dispatch(loginFinish())
         }
