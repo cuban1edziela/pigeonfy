@@ -105,7 +105,7 @@ def get_user_contacts():
     contacts = []
 
     if Users_contact.query.filter_by(user_uid=uid).all() == []:
-        return 'No contacts'
+        return jsonify(data = [])
 
     for users in Users_contact.query.filter_by(user_uid=uid).all():
 

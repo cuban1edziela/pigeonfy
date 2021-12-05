@@ -6,7 +6,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import CommentIcon from '@mui/icons-material/Comment';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import { setContact } from '../../slices/contactSlice';
@@ -23,17 +23,19 @@ export default function ContactBook() {
   const contact = useSelector(state => state.contact);
   const [contactForm, setContactForm] = useState(false);
   const [checked, setChecked] = useState([0]);
-  let [contacts, setContacts] = useState([]);
   const dispatch = useDispatch();
 
-  useEffect(() => {
+
+  const getData = useCallback(() => {
     populateContacts(session.user.uid)
-    setContacts(contact.userContacts)
   }, [])
+
+  useEffect(() => {
+    getData()
+  }, [getData, contactForm])
 
   const handleAddContact = () => {
     setContactForm(!contactForm)
-    populateContacts(session.user.uid)
   };
 
   const handleSubmit = (event) => {
@@ -75,7 +77,7 @@ export default function ContactBook() {
   return (
     <Box sx={{ display: 'inline-flex' }}>
       <List sx={{ width: 500, bgcolor: 'primary.main' }}>
-        {contacts.map((value) => {
+        {contact.userContacts.map((value) => {
           const labelId = `checkbox-list-label-${value}`;
 
           return (

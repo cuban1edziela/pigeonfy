@@ -1,22 +1,24 @@
 import Appbar from './components/Appbar'
-import React, {useEffect} from 'react';
-import {Footer} from './components/Footer';
-import {AppBox} from './components/AppBox';
-import {Routes} from "./Routes";
-import { useDispatch } from 'react-redux';
-import {refreshAuth} from "./services/session";
-import {onAuthStateChanged} from "firebase/auth";
-import {auth} from "./firebase";
+import React, { useEffect } from 'react';
+import { Footer } from './components/Footer';
+import { AppBox } from './components/AppBox';
+import { Routes } from "./Routes";
+import { useDispatch, useSelector} from 'react-redux';
+import { refreshAuth } from "./services/session";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase";
+import { UnderLoad} from './containers/loading';
 
 
 function App() {
 
+    const session = useSelector(state => state.session)
     const dispatch = useDispatch();
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (authUser) => {
-                dispatch(refreshAuth(authUser))
-            }
+            dispatch(refreshAuth(authUser))
+        }
         );
         return () => {
             unsubscribe();
@@ -26,10 +28,10 @@ function App() {
 
     return (
         <>
-            <Appbar/>
-            <Routes/>
+            <Appbar />
+                {session.loading ? <UnderLoad /> : <Routes />}
             <AppBox>
-                <Footer/>
+                <Footer />
             </AppBox>
         </>
 
