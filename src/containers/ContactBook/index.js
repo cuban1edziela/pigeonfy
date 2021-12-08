@@ -35,7 +35,7 @@ export default function ContactBook() {
   useEffect(() => {
     getData()
     dispatch(setContact([]));
-  }, [getData, contactForm, reload])
+  }, [getData, reload])
 
   const handleAddContact = () => { setContactForm(!contactForm) }
   const handleOnSendMessage = () => { 
@@ -63,8 +63,9 @@ export default function ContactBook() {
       toast.error('Please fill all the required fields.', { position: 'bottom-left' })
     }
     else {
-      addContact(uid, name, surname, n, e)
+      addContact(uid, name, surname, n, e);
       setContactForm(!contactForm);
+      setReload(!reload);
     }
   };
 

@@ -7,7 +7,7 @@ export const UnderLoad = () => {
   const theme = useTheme();
 
   return (
-    <Box sx={{ display: 'flex', width: '100%'}}>
+    <Box sx={{ display: 'flex', width: '100%', bgcolor: 'primary.main'}}>
       <CircularProgress style={{color: theme.palette.secondary.main, margin: 'auto'}}/>
     </Box>
   )

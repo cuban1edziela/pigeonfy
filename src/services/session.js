@@ -9,10 +9,12 @@ import {
     loginSuccess,
     refreshAuthInit,
     logout,
+    init
 } from "../slices/sessionSlice";
 
 export const loginWithEmailAndPassword = (email, password) => {
     return async (dispatch) => {
+        dispatch(init())
         try {
             const user = await signIn(auth, email, password);
             dispatch(loginSuccess(user.user))
