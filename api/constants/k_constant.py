@@ -1,5 +1,4 @@
 
-
 class k_constant:
     def __init__(self, constant = 3):
         self.constant = constant

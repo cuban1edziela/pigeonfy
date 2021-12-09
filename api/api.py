@@ -3,6 +3,7 @@ from flask import *
 from flask_cors import *
 import enciphering
 import deciphering
+from keys_generator import key_generator
 from flask_sqlalchemy import SQLAlchemy
 from dataclasses import dataclass
 
@@ -22,6 +23,9 @@ class NewUser:
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     uid = db.Column(db.String(28), nullable=False)
+    e = db.Column(db.Integer, nullable=False)
+    n = db.Column(db.Integer, nullable=False)
+    d = db.Column(db.Integer, nullable=False)
     contacts = db.relationship('Users_contact', backref='uid', lazy=True)
 
     def __repr__(self):
@@ -60,8 +64,10 @@ def encipher_user_message():
 def decipher_user_message():
     recieved_file = request.json
     message = recieved_file['message']
-
-    deciphered_message = deciphering.decipher(message)
+    user_uid = recieved_file['uid']
+    user = User.query.filter_by(uid=user_uid).first()
+    
+    deciphered_message = deciphering.decipher(message, user.n, user.d)
     return jsonify(response=deciphered_message)
 
 
@@ -69,7 +75,12 @@ def decipher_user_message():
 def create_new_user():
     recieved_file = request.json
     user_uid = recieved_file['uid']
-    new_user = User(uid=user_uid)
+    numbers = key_generator()
+    new_e = numbers[0]
+    new_n = numbers[1]
+    new_d = numbers[2]
+
+    new_user = User(uid=user_uid, e=new_e, n=new_n, d=new_d)
     db.session.add(new_user)
     db.session.commit()
     return jsonify('New user created successfully')
@@ -109,8 +120,6 @@ def remove_contact():
     return jsonify('Contact removed successfully')
 
 
-
-
 @app.route('/get-contacts', methods=['GET', 'POST'])
 def get_user_contacts():
     recieved_file = request.json
@@ -133,4 +142,12 @@ def get_user_contacts():
         
     return jsonify(contacts)
 
+@app.route('/get-keys', methods=['GET', 'POST'])
+def get_user_keys():
+    recieved_file = request.json
+    user_uid = recieved_file['uid']
+    user = User.query.filter_by(uid=user_uid).first()
+    return jsonify(e=user.e, n=user.n, d=user.d)
+
 app.run()
+

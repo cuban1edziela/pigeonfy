@@ -1,24 +1,14 @@
 from functions import *                                   
 from constants import *
 
-
-
-f = open("keys.txt", "r")
-n = int(f.readline())
-e_user = int(f.readline())
-d = int(f.readline())
-f.close()
-
 k_object = k_constant()
 k = k_object.constant
 l_object = l_constant()
 l = l_object.constant
 
-
-def decipher(user_ciphered_message):
-
+def decipher(user_ciphered_message, n, d):
     # Ciphered message is split into 'l' letter ciphertext units.
-    # The value of 'l' can be easily changed in 'Variables' folder
+    # The value of 'l' can be easily changed in 'constants' folder
     ciphered_message_list = [(user_ciphered_message[i:i+l]) for i in range(0, len(user_ciphered_message), l)]
 
     deciphered_message = []                                     #'Defining variables for deciphered messages, list holds each letter and string returns a whole word
@@ -53,8 +43,6 @@ def decipher(user_ciphered_message):
                 exponent = k-1
             else:
                 exponent -= 1
-
-
 
     for x in deciphered_message:                                #Creating string from the deciphered message list
         deciphered_message_string += x

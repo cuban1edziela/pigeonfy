@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import { useHistory } from 'react-router';
 import { useTheme } from '@mui/material/styles';
 import { UpdateProfile } from '../../services/updateProfile';
+import { getKeys } from '../../services/getKeys';
 
 export default function InputWithIcon() {
 
@@ -17,6 +18,10 @@ export default function InputWithIcon() {
     const session = useSelector(state => state.session);
     const history = useHistory();
     const dispatch = useDispatch();
+
+    const handleKeys = () => {
+        getKeys(session.user.uid);
+    }
 
     const handleUpdateProfile = async (event) => {
         event.preventDefault();
@@ -28,7 +33,6 @@ export default function InputWithIcon() {
         };
 
         UpdateProfile(newProfile)
-
     }
 
     const handleSubmit = async (event) => {
@@ -64,13 +68,6 @@ export default function InputWithIcon() {
                     label={session.user?.displayName}
                     sx={{ml: '20px'}}
                 />
-                <Button
-                    sx={{ml:'20px'}}
-                    type="submit"
-                    variant='outlined'
-                    color="secondary">
-                    CHANGE NAME
-                </Button>
             </Box>
 
             <Box sx={{ display: 'inline-flex', pl: 5 }}>
@@ -83,6 +80,13 @@ export default function InputWithIcon() {
                     onClick={handleSubmit}
                     color="secondary">
                     LOG OUT
+                </Button>
+                <Button 
+                    sx={{ml: 5}}
+                    variant='outlined'
+                    onClick={handleKeys}
+                    color="secondary">
+                    GET KEYS
                 </Button>
             </Box>
 

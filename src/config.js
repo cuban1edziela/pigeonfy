@@ -4,4 +4,5 @@ export const URL = {
     get GET_CONTACTS() {return `${BASE_URL}/get-contacts`},
     get ADD_CONTACT() {return `${BASE_URL}/add-contact`},
     get REMOVE_CONTACT() {return `${BASE_URL}/remove-contact`},
+    get GET_KEYS() {return `${BASE_URL}/get-keys`},
 }

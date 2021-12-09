@@ -7,12 +7,14 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { useState } from 'react';
 import axios from 'axios';
 import PigeonKey from './PigeonKey.svg';
+import { useSelector } from 'react-redux';
 
 export default function SimpleContainer() {
     const theme = useTheme();
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
     const [cipheredMessage, setCipheredMessage] = useState('');
+    const session = useSelector(state => state.session);
 
     const handleClick = () => {
         setLoading(true);
@@ -22,7 +24,8 @@ export default function SimpleContainer() {
             method: 'post',
             url: 'http://127.0.0.1:5000/message/decipher',
             data: {
-                message: message
+                message: message,
+                uid: session.user.uid
             }
         }).then(res => {
             console.log(res.data);

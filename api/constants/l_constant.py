@@ -1,5 +1,4 @@
 
-
 class l_constant:
     def __init__(self, constant = 4):
         self.constant = constant
