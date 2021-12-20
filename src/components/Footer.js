@@ -20,21 +20,18 @@ function Copyright(props) {
 const footers = [
     {
         title: 'Company',
-        description: ['Team', 'History', 'Contact us', 'Locations'],
+        description: ['Team', 'History'],
     },
     {
         title: 'Features',
         description: [
             'Cool stuff',
             'Random feature',
-            'Team feature',
-            'Developer stuff',
-            'Another one',
         ],
     },
     {
         title: 'Resources',
-        description: ['Resource', 'Resource name', 'Another resource', 'Final resource'],
+        description: ['Resource', 'Resource name'],
     },
     {
         title: 'Legal',
@@ -46,10 +43,10 @@ export const Footer = () => {
 
     return (
         <Container
-            maxWidth="md"
             component="footer"
             sx={{
-                borderTop: (theme) => `1px solid ${theme.palette.divider}`,
+                width: '100%',
+                borderTop: (theme) => `1px solid ${theme.palette.secondary.main}`,
                 mt: 8,
                 py: [3, 6],
                 bgcolor: 'primary'

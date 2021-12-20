@@ -9,11 +9,13 @@ import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import { useSelector } from 'react-redux';
+import { useTheme } from '@emotion/react';
 
 export default function ButtonAppBar() {
 
     const history = useHistory();
     const session = useSelector(state => state.session)
+    const theme = useTheme();
 
     const goToEnciphering = () => {session.isAuthenticated ? history.push('/encipher') : history.push('/login')};
     const goToDeciphering = () => {session.isAuthenticated ?  history.push('/decipher') : history.push('/login')};
@@ -23,7 +25,9 @@ export default function ButtonAppBar() {
     const goToLogin = () => history.push('/login')
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1,   
+            borderBottom: (theme) => `1px solid ${theme.palette.secondary.main}`,     
+        }}>
             <AppBar position="static">
                 <Toolbar>
                     <Link to='/'> <img width='50px' src={Logo} alt="Pigeonfy Logo" /> </Link>
